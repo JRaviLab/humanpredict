@@ -1,0 +1,54 @@
+# Pipeline configuration. See PLAN.md for the meaning of each section.
+seed: 42
+
+paths:
+  labeled_csv: data/human_labeled_biosamples.csv
+  bioproject_map: data exploration/entrez_mapping_checkpoint.json
+  processed_dir: data/processed
+  splits_dir: data/splits              # frozen split, committed to git
+  embeddings_dir: data/embeddings
+  artifacts_dir: artifacts
+  reports_dir: reports
+
+text:
+  fields: [host_comments, isolation_comments, comments]
+  prefixes: {host_comments: "host", isolation_comments: "isolation", comments: "comments"}
+  separator: " | "
+  placeholder_tokens: [missing, not collected, not applicable, not available, na, n/a,
+                       unknown, none, "-", not provided, restricted access]
+
+embedding:
+  model: NeuML/pubmedbert-base-embeddings
+  revision: b79526d6ef3645e0df4530322e266f24c829f5ef   # pinned 2026-09-29
+  device: cuda
+  fp16: true
+  max_seq_length: 256
+  batch_size: 256
+  normalize: true
+  near_dup_cosine: 0.98
+
+split:
+  fractions: {train: 0.70, val: 0.15, test: 0.15}
+  max_group_frac: 0.05
+
+stage1:
+  cv_folds: 5
+  C_grid: {logspace_start: -3, logspace_stop: 2, num: 11}
+  class_weight_grid: [null, balanced]
+  l1_ratio: 0.0          # L2; sklearn 1.9 deprecates `penalty`
+  solver: lbfgs
+  max_iter: 5000
+  scoring: f1
+  n_jobs: 12
+  learning_curve_fractions: [0.02, 0.05, 0.1, 0.2, 0.4, 0.7, 1.0]
+
+stage2:
+  target_precision: 0.98
+  max_pseudo_ratio: 1.0          # pseudo-labeled rows at most 1x the labeled training rows
+  pseudo_weight_grid: [0.25, 0.5, 1.0]
+  max_rounds: 3
+  min_val_f1_gain: 0.002
+  audit_sample_per_class: 100
+
+evaluation:
+  bootstrap_iters: 1000

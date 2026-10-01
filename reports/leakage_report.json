@@ -1,0 +1,151 @@
+{
+  "seed": 42,
+  "near_dup_cosine": 0.98,
+  "prep": {
+    "raw_rows": 171001,
+    "raw_label_counts": {
+      "0": 89320,
+      "1": 46183,
+      "-1": 35498
+    },
+    "dropped_placeholder_negatives": 5108,
+    "dropped_labeled_empty_text": 127,
+    "dropped_conflicting_texts": 891,
+    "dropped_conflicting_rows": 3006,
+    "labeled_rows": 73440,
+    "labeled_label_counts": {
+      "1": 44345,
+      "0": 29095
+    },
+    "labeled_unique_texts": 70941,
+    "labeled_bioproject_coverage": 0.5995778867102397,
+    "unlabeled_rows": 89320,
+    "dropped_unlabeled_empty_text": 76,
+    "unlabeled_unique_texts": 85582
+  },
+  "L1_accessions": {
+    "labeled_duplicate_accessions": 0,
+    "unlabeled_in_labeled": 0,
+    "passed": true
+  },
+  "L2_label_noise": {
+    "dropped_placeholder_negatives": 5108,
+    "dropped_conflicting_texts": 891,
+    "dropped_conflicting_rows": 3006,
+    "dropped_labeled_empty_text": 127
+  },
+  "L5_groups": {
+    "n_groups": 37947,
+    "largest_group_rows": 1923,
+    "largest_group_frac": 0.0262,
+    "top5_sizes": [
+      464,
+      667,
+      694,
+      974,
+      1923
+    ],
+    "passed": true,
+    "bioproject_coverage": 0.5995778867102397,
+    "skipped_bioproject_links": [
+      {
+        "column": "bioproject",
+        "value": "PRJNA514245",
+        "rows": 1409
+      },
+      {
+        "column": "bioproject",
+        "value": "PRJNA288601",
+        "rows": 1677
+      }
+    ]
+  },
+  "L6_split": {
+    "status": "reused frozen split",
+    "counts": {
+      "train": 51406,
+      "val": 11018,
+      "test": 11016
+    },
+    "human_rate": {
+      "test": 0.6038,
+      "train": 0.6038,
+      "val": 0.6038
+    }
+  },
+  "L3_disjoint": [
+    {
+      "key": "text_hash",
+      "values_in_multiple_splits": 0,
+      "passed": true
+    },
+    {
+      "key": "text_component",
+      "values_in_multiple_splits": 0,
+      "passed": true
+    },
+    {
+      "key": "group_id",
+      "values_in_multiple_splits": 0,
+      "passed": true
+    },
+    {
+      "key": "bioproject (diagnostic)",
+      "test_rows_with_project_in_train": 0.0667
+    }
+  ],
+  "L4_near_duplicates": {
+    "pairs": 255052,
+    "cross_label_pairs": 7148,
+    "components": 59017,
+    "largest_component_texts": 320,
+    "test_max_sim_to_train": {
+      "n": 10663,
+      "quantiles": {
+        "0.5": 0.8433,
+        "0.9": 0.9595,
+        "0.99": 0.9775,
+        "1.0": 0.9795
+      },
+      "n_ge_0.98": 0
+    },
+    "val_max_sim_to_train": {
+      "n": 10720,
+      "quantiles": {
+        "0.5": 0.8379,
+        "0.9": 0.959,
+        "0.99": 0.9775,
+        "1.0": 0.9795
+      },
+      "n_ge_0.98": 0
+    }
+  },
+  "L7_fit_on_train_only": {
+    "status": "enforced in stage1"
+  },
+  "L8_unlabeled_pool": {
+    "unique_texts": 85582,
+    "status_counts": {
+      "ok": 82774,
+      "in_labeled": 2491,
+      "near_val_test": 317
+    },
+    "usable_rows": 85635,
+    "passed": true
+  },
+  "L9_taxon_split": {
+    "counts": {
+      "train": 52562,
+      "test": 9275,
+      "val": 9259,
+      "excluded": 2344
+    },
+    "human_rate": {
+      "excluded": 0.4437,
+      "test": 0.535,
+      "train": 0.6325,
+      "val": 0.5504
+    },
+    "taxa_forced_to_train": 3
+  }
+}

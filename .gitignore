@@ -1,0 +1,15 @@
+# Environments
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Large raw data (>100 MB GitHub limit)
+data/bacteria_BioSample.csv
+data/Whole_BioSample.parquet
+
+# Generated pipeline outputs
+data/processed/
+data/embeddings/
+artifacts/
+*.egg-info/

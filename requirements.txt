@@ -1,0 +1,19 @@
+# Direct dependencies (conda env `txt2onto`, Python 3.14.7). Exact versions: requirements.lock.txt
+# Install torch first from the CUDA index:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu128
+torch>=2.11
+sentence-transformers>=6.1
+transformers>=5.17
+scikit-learn>=1.9
+scipy
+numpy
+pandas>=3.0
+pyarrow
+pyyaml
+tqdm
+joblib
+matplotlib
+pytest
+duckdb          # src/data_retrieval.py (OmicIDX BioSample query) and the data exploration notebook
+biopython
+ipykernel
