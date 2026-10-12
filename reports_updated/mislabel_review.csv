@@ -1,0 +1,31 @@
+is_human_review,band,p_human,suspect_host_name,biosample_accession,sample_taxonomy_name,host_name,host_comments,isolation_comments,comments,category
+,very_high,0.9997,True,SAMN10984484,Enterococcus gallinarum,Hospital environment,not applicable,Christiana Shobo | ICU - door handle,,-1
+,very_high,0.9994,True,SAMN25249780,Pseudomonas aeruginosa,CF-016,Cystic Fibrosis,CF16.1.02 | University of Texas Southwestern Medical Center | sputum,,-1
+,very_high,0.9994,True,SAMEA114347961,Listeria monocytogenes,clinical/host-associated,not applicable,C14 | clinical/host-associated,,-1
+,very_high,0.9993,True,SAMN42769469,Enterobacteriaceae bacterium,B5055,nosocomial infections,K. pneumoniae | Thung | patients,,-1
+,very_high,0.9974,True,SAMN12276354,Bacteroides fragilis,Subject 12,,Isolate 16 | stool | Bacteria culture from human stools,,-1
+,very_high,0.9973,True,SAMEA5665988,Streptococcus pneumoniae,Invasive pneumococcal disease,diseased,ES18-HGTIP-9I | blood,,-1
+,very_high,0.997,True,SAMEA14288411,Salmonella enterica subsp. enterica serovar Virchow,blood,diseased,B94 | human,,-1
+,very_high,0.988,True,SAMEA114440227,Salmonella enterica subsp. enterica serovar Typhi,Salmonella enterica subsp. enterica serovar Typhi,not provided,ZV2306210243 | blood,,-1
+,very_high,0.9991,False,SAMN42182051,Escherichia coli,Coturnix japonica,,Shijiazhuang | DNBSEQ-T7,,-1
+,very_high,0.994,False,SAMN19882240,Staphylococcus aureus,horse,,fluid draining tract | whole organism,,-1
+,high,0.9781,True,SAMEA5665999,Streptococcus pneumoniae,Invasive pneumococcal disease,diseased,ES34-HGUGM-3089 | blood,,-1
+,high,0.9732,True,SAMEA114440218,Salmonella enterica subsp. enterica serovar Typhi,Salmonella enterica subsp. enterica serovar Typhi,not provided,S265 | blood,,-1
+,high,0.9524,True,SAMEA112753281,Salmonella enterica subsp. enterica serovar Typhimurium str. ATCC 14028,Salmonella enterica subsp. enterica serovar Typhimurium str. ATCC 14028,,INRAE Val de Loire Research Center Unit Infectiology andPublic Health (ISP BAT311) route de Crotelles 37380 Nouzilly France | INRAE Val de Loire Research Center Unit Infectiology and Public Health (ISP BAT311) route de Crotelles 37380 Nouzilly France,,-1
+,high,0.9461,True,SAMEA115648259,Salmonella enterica subsp. enterica serovar Paratyphi A,Salmonella enterica subsp. enterica serovar Paratyphi A,not applicable,B3250 | blood,,-1
+,high,0.9456,True,SAMN14229674,Staphylococcus simulans,dairy cattle (with subclinical mastitis),,6073,,-1
+,high,0.942,True,SAMN38252591,Pseudomonas aeruginosa,sputum,,IPC-197 | human,,-1
+,high,0.933,True,SAMN41988601,Pigmentiphaga,1122,,cell culture | yyuu,,-1
+,high,0.9224,True,SAMEA5946357,Ancylobacter aquaticus,w5,e5,3 | g5,,-1
+,high,0.913,True,SAMN13091356,Lacticaseibacillus rhamnosus,Infant,,feces from breastmilk-fed infant | single cell,,-1
+,high,0.9228,False,SAMN04394853,Salmonella enterica subsp. enterica serovar Typhimurium,bovine,Salmonella infections or carrier,R9_3245_R2 | Washington State University | stool/fecal sample,,-1
+,medium,0.888,True,SAMEA5946354,Ancylobacter aquaticus,w4,e4,3 | g4,,-1
+,medium,0.8691,True,SAMN12770178,Akkermansia,volunteer 1,,volunteer1 with D2O | metagenomic assembly,,-1
+,medium,0.8478,True,SAMN38252631,Pseudomonas aeruginosa,sputum,,IPC-27 | human,,-1
+,medium,0.8316,True,SAMN38252500,Pseudomonas aeruginosa,blood,,IPC-1714 | human,,-1
+,medium,0.829,True,SAMEA114327905,Salmonella enterica subsp. enterica serovar Typhi,Salmonella enterica subsp. enterica serovar Typhi,not provided,A86813 | blood,,-1
+,medium,0.818,True,SAMEA115648264,Salmonella enterica subsp. enterica serovar Paratyphi A,Salmonella enterica subsp. enterica serovar Paratyphi A,not applicable,B5956 | blood,,-1
+,medium,0.8707,False,SAMEA4810820,Salmonella enterica subsp. enterica serovar Pullorum,Gallus gallus domesticus,diseased,6803,,-1
+,medium,0.8563,False,SAMN22106488,Lactiplantibacillus plantarum,Kefir grain,,Bacterial fluid,,-1
+,medium,0.8277,False,SAMN14427952,Entomospira culicis,Culex pipiens,,cell culture | midguts | type strain of Entomospira culicis,,-1
+,medium,0.8113,False,SAMN16213933,Mycoplasmopsis bovis,Bos taurus,,M0048 | whole organism,,-1

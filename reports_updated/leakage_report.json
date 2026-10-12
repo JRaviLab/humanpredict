@@ -1,0 +1,141 @@
+{
+  "seed": 42,
+  "near_dup_cosine": 0.98,
+  "prep": {
+    "raw_rows": 1511070,
+    "raw_label_counts": {
+      "1": 638473,
+      "0": 631053,
+      "-1": 241544
+    },
+    "dropped_placeholder_negatives": 32239,
+    "dropped_labeled_empty_text": 140,
+    "dropped_conflicting_texts": 1149,
+    "dropped_conflicting_rows": 3872,
+    "labeled_rows": 843766,
+    "labeled_label_counts": {
+      "1": 636206,
+      "0": 207560
+    },
+    "labeled_unique_texts": 840240,
+    "labeled_bioproject_coverage": 0.050074309701978986,
+    "unlabeled_rows": 631053,
+    "dropped_unlabeled_empty_text": 175,
+    "unlabeled_unique_texts": 625282
+  },
+  "L1_accessions": {
+    "labeled_duplicate_accessions": 0,
+    "unlabeled_in_labeled": 0,
+    "passed": true
+  },
+  "L2_label_noise": {
+    "dropped_placeholder_negatives": 32239,
+    "dropped_conflicting_texts": 1149,
+    "dropped_conflicting_rows": 3872,
+    "dropped_labeled_empty_text": 140
+  },
+  "L5_groups": {
+    "n_groups": 117781,
+    "largest_group_rows": 28849,
+    "largest_group_frac": 0.0342,
+    "top5_sizes": [
+      10209,
+      13194,
+      13739,
+      26288,
+      28849
+    ],
+    "passed": true,
+    "bioproject_coverage": 0.050074309701978986,
+    "skipped_bioproject_links": []
+  },
+  "L6_split": {
+    "status": "created and frozen",
+    "path": "data/splits/split.parquet",
+    "counts": {
+      "train": 590634,
+      "test": 126567,
+      "val": 126565
+    },
+    "human_rate": {
+      "test": 0.754,
+      "train": 0.754,
+      "val": 0.754
+    }
+  },
+  "L3_disjoint": [
+    {
+      "key": "text_hash",
+      "values_in_multiple_splits": 0,
+      "passed": true
+    },
+    {
+      "key": "text_component",
+      "values_in_multiple_splits": 0,
+      "passed": true
+    },
+    {
+      "key": "group_id",
+      "values_in_multiple_splits": 0,
+      "passed": true
+    },
+    {
+      "key": "bioproject (diagnostic)",
+      "test_rows_with_project_in_train": 0.0
+    }
+  ],
+  "L4_near_duplicates": {
+    "pairs": 870549010,
+    "cross_label_pairs": 514262,
+    "components": 140841,
+    "largest_component_texts": 28849,
+    "test_max_sim_to_train": {
+      "n": 126175,
+      "quantiles": {
+        "0.5": 0.9526,
+        "0.9": 0.9712,
+        "0.99": 0.978,
+        "1.0": 0.9795
+      },
+      "n_ge_0.98": 0
+    },
+    "val_max_sim_to_train": {
+      "n": 125580,
+      "quantiles": {
+        "0.5": 0.9385,
+        "0.9": 0.9722,
+        "0.99": 0.9785,
+        "1.0": 0.9795
+      },
+      "n_ge_0.98": 0
+    }
+  },
+  "L7_fit_on_train_only": {
+    "status": "enforced in stage1"
+  },
+  "L8_unlabeled_pool": {
+    "unique_texts": 625282,
+    "status_counts": {
+      "ok": 619760,
+      "near_val_test": 3276,
+      "in_labeled": 2246
+    },
+    "usable_rows": 624260,
+    "passed": true
+  },
+  "L9_taxon_split": {
+    "counts": {
+      "train": 555035,
+      "test": 111212,
+      "excluded": 89595,
+      "val": 87924
+    },
+    "human_rate": {
+      "excluded": 0.5998,
+      "test": 0.7543,
+      "train": 0.7838,
+      "val": 0.7225
+    },
+    "taxa_forced_to_train": 4
+  }
+}

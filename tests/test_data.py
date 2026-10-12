@@ -18,6 +18,11 @@ def test_clean_field_drops_placeholders_and_blanks():
     assert clean_field(None, PH) == ""
 
 
+def test_clean_field_splits_pipe_separated_values():
+    assert clean_field("urine | missing | Not Applicable", PH) == "urine"
+    assert clean_field("Hospital | Clinical; missing", PH) == "Hospital; Clinical"
+
+
 def test_build_text_skips_empty_fields():
     df = pd.DataFrame({
         "host_comments": [None, "adult male"],
@@ -36,3 +41,5 @@ def test_is_placeholder():
     assert is_placeholder("Not Applicable", PH)
     assert is_placeholder(float("nan"), PH)
     assert not is_placeholder("Bos taurus", PH)
+    assert is_placeholder("missing | not applicable", PH)
+    assert not is_placeholder("Bos taurus | missing", PH)

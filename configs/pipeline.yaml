@@ -2,13 +2,13 @@
 seed: 42
 
 paths:
-  labeled_csv: data/human_labeled_biosamples.csv
+  labeled_data: data/human_labeled.parquet   # .parquet or .csv
   bioproject_map: data exploration/entrez_mapping_checkpoint.json
-  processed_dir: data/processed
-  splits_dir: data/splits              # frozen split, committed to git
-  embeddings_dir: data/embeddings
-  artifacts_dir: artifacts
-  reports_dir: reports
+  processed_dir: data/processed_updated
+  splits_dir: data/splits_updated
+  embeddings_dir: data/embeddings_updated
+  artifacts_dir: artifacts_updated
+  reports_dir: reports_updated
 
 text:
   fields: [host_comments, isolation_comments, comments]
@@ -26,6 +26,7 @@ embedding:
   batch_size: 256
   normalize: true
   near_dup_cosine: 0.98
+  sim_chunk: 512           # query rows per GPU similarity block; 4096 OOMs on 8 GB with ~840k labeled texts
 
 split:
   fractions: {train: 0.70, val: 0.15, test: 0.15}
@@ -39,7 +40,7 @@ stage1:
   solver: lbfgs
   max_iter: 5000
   scoring: f1
-  n_jobs: 12
+  n_jobs: 3             # each CV fit holds ~4-5 GB; 12 exceeds 23 GB RAM at ~600k train rows
   learning_curve_fractions: [0.02, 0.05, 0.1, 0.2, 0.4, 0.7, 1.0]
 
 stage2:

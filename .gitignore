@@ -3,13 +3,13 @@
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+*.egg-info/
 
-# Large raw data (>100 MB GitHub limit)
-data/bacteria_BioSample.csv
-data/Whole_BioSample.parquet
+# Data: only the labeled input is versioned; everything else is raw or generated.
+# (Files already tracked before this rule stay tracked until removed with `git rm --cached`.)
+data/*
+!data/human_labeled.parquet
+data exploration/*.parquet
 
 # Generated pipeline outputs
-data/processed/
-data/embeddings/
-artifacts/
-*.egg-info/
+artifacts*/
