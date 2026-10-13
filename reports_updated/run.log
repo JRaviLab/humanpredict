@@ -1,0 +1,271 @@
+== split ==
+{
+  "seed": 42,
+  "near_dup_cosine": 0.98,
+  "L1_accessions": {
+    "labeled_duplicate_accessions": 0,
+    "unlabeled_in_labeled": 0,
+    "passed": true
+  },
+  "L2_label_noise": {
+    "dropped_placeholder_negatives": 32239,
+    "dropped_conflicting_texts": 1149,
+    "dropped_conflicting_rows": 3872,
+    "dropped_labeled_empty_text": 140
+  },
+  "L5_groups": {
+    "n_groups": 117781,
+    "largest_group_rows": 28849,
+    "largest_group_frac": 0.0342,
+    "top5_sizes": [
+      10209,
+      13194,
+      13739,
+      26288,
+      28849
+    ],
+    "passed": true,
+    "bioproject_coverage": 0.050074309701978986,
+    "skipped_bioproject_links": []
+  },
+  "L6_split": {
+    "status": "created and frozen",
+    "path": "data/splits/split.parquet",
+    "counts": {
+      "train": 590634,
+      "test": 126567,
+      "val": 126565
+    },
+    "human_rate": {
+      "test": 0.754,
+      "train": 0.754,
+      "val": 0.754
+    }
+  },
+  "L3_disjoint": [
+    {
+      "key": "text_hash",
+      "values_in_multiple_splits": 0,
+      "passed": true
+    },
+    {
+      "key": "text_component",
+      "values_in_multiple_splits": 0,
+      "passed": true
+    },
+    {
+      "key": "group_id",
+      "values_in_multiple_splits": 0,
+      "passed": true
+    },
+    {
+      "key": "bioproject (diagnostic)",
+      "test_rows_with_project_in_train": 0.0
+    }
+  ],
+  "L4_near_duplicates": {
+    "pairs": 870549010,
+    "cross_label_pairs": 514262,
+    "components": 140841,
+    "largest_component_texts": 28849,
+    "test_max_sim_to_train": {
+      "n": 126175,
+      "quantiles": {
+        "0.5": 0.9526,
+        "0.9": 0.9712,
+        "0.99": 0.978,
+        "1.0": 0.9795
+      },
+      "n_ge_0.98": 0
+    },
+    "val_max_sim_to_train": {
+      "n": 125580,
+      "quantiles": {
+        "0.5": 0.9385,
+        "0.9": 0.9722,
+        "0.99": 0.9785,
+        "1.0": 0.9795
+      },
+      "n_ge_0.98": 0
+    }
+  },
+  "L7_fit_on_train_only": {
+    "status": "enforced in stage1"
+  },
+  "L8_unlabeled_pool": {
+    "unique_texts": 625282,
+    "status_counts": {
+      "ok": 619760,
+      "near_val_test": 3276,
+      "in_labeled": 2246
+    },
+    "usable_rows": 624260,
+    "passed": true
+  },
+  "L9_taxon_split": {
+    "counts": {
+      "train": 555035,
+      "test": 111212,
+      "excluded": 89595,
+      "val": 87924
+    },
+    "human_rate": {
+      "excluded": 0.5998,
+      "test": 0.7543,
+      "train": 0.7838,
+      "val": 0.7225
+    },
+    "taxa_forced_to_train": 4
+  }
+}
+	Command being timed: "/home/clayg/miniforge3/envs/txt2onto/bin/python -m txt2onto.run --stage split"
+	User time (seconds): 534.67
+	System time (seconds): 119.37
+	Percent of CPU this job got: 60%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 18:06.69
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 23237996
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 1769415
+	Minor (reclaiming a frame) page faults: 19270003
+	Voluntary context switches: 1865881
+	Involuntary context switches: 38068
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+exit[split]=0
+== stage1 ==
+{
+  "best_params": {
+    "C": 3.1622776601683795,
+    "class_weight": null
+  },
+  "cv_best": {
+    "train_f1": 0.9744,
+    "train_f1_std": 0.0002,
+    "train_neg_log_loss": 0.1101,
+    "train_neg_log_loss_std": 0.0006,
+    "train_average_precision": 0.9954,
+    "train_average_precision_std": 0.0001,
+    "train_precision": 0.9686,
+    "train_precision_std": 0.0006,
+    "train_recall": 0.9802,
+    "train_recall_std": 0.0006,
+    "cv_f1": 0.9577,
+    "cv_f1_std": 0.0038,
+    "cv_neg_log_loss": 0.1832,
+    "cv_neg_log_loss_std": 0.0149,
+    "cv_average_precision": 0.988,
+    "cv_average_precision_std": 0.0024,
+    "cv_precision": 0.9475,
+    "cv_precision_std": 0.0102,
+    "cv_recall": 0.9682,
+    "cv_recall_std": 0.0064
+  },
+  "val": {
+    "n": 126565,
+    "human_rate": 0.754,
+    "log_loss": 0.2154,
+    "average_precision": 0.9781,
+    "roc_auc": 0.9556,
+    "at_0.5": {
+      "threshold": 0.5,
+      "precision": 0.9477,
+      "recall": 0.9579,
+      "f1": 0.9528,
+      "macro_f1": 0.9024,
+      "confusion": {
+        "tn": 26093,
+        "fp": 5041,
+        "fn": 4020,
+        "tp": 91411
+      }
+    },
+    "at_best_f1": {
+      "threshold": 0.3746,
+      "precision": 0.9395,
+      "recall": 0.9684,
+      "f1": 0.9537,
+      "macro_f1": 0.9013,
+      "confusion": {
+        "tn": 25186,
+        "fp": 5948,
+        "fn": 3018,
+        "tp": 92413
+      }
+    }
+  },
+  "val_baselines": {
+    "all_human": {
+      "threshold": 0.5,
+      "precision": 0.754,
+      "recall": 1.0,
+      "f1": 0.8598,
+      "macro_f1": 0.4299,
+      "confusion": {
+        "tn": 0,
+        "fp": 31134,
+        "fn": 0,
+        "tp": 95431
+      }
+    },
+    "keyword_rule": {
+      "threshold": 0.5,
+      "precision": 0.9962,
+      "recall": 0.2663,
+      "f1": 0.4203,
+      "macro_f1": 0.445,
+      "confusion": {
+        "tn": 31038,
+        "fp": 96,
+        "fn": 70015,
+        "tp": 25416
+      }
+    }
+  },
+  "stage2_preview": {
+    "target_precision": 0.98,
+    "tau_pos": 0.9986,
+    "tau_neg": 0.0427,
+    "coverage_pos": 0.1866,
+    "coverage_neg": 0.1456
+  },
+  "trace_check": {
+    "iterations": 824,
+    "coef_correlation_with_sklearn": 0.968368,
+    "final_val_log_loss": 0.2157
+  }
+}
+figures written to /home/clayg/humanpredict/reports_updated
+	Command being timed: "/home/clayg/miniforge3/envs/txt2onto/bin/python -m txt2onto.run --stage stage1"
+	User time (seconds): 66101.75
+	System time (seconds): 561.95
+	Percent of CPU this job got: 2432%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 45:40.09
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 12044328
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 458
+	Minor (reclaiming a frame) page faults: 8819869
+	Voluntary context switches: 402672
+	Involuntary context switches: 3227404
+	Swaps: 0
+	File system inputs: 0
+	File system outputs: 0
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+exit[stage1]=0

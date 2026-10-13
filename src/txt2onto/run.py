@@ -40,7 +40,7 @@ def stage_split(cfg: dict) -> None:
     from txt2onto.split import build_groups, components, group_size_summary, grouped_split
 
     paths, emb_cfg, split_cfg, seed = cfg["paths"], cfg["embedding"], cfg["split"], cfg["seed"]
-    thr, device = emb_cfg["near_dup_cosine"], emb_cfg["device"]
+    thr, device, chunk = emb_cfg["near_dup_cosine"], emb_cfg["device"], emb_cfg["sim_chunk"]
     out = paths["processed_dir"]
     labeled = pd.read_parquet(out / "labeled.parquet")
     unlabeled = pd.read_parquet(out / "unlabeled.parquet")
@@ -60,7 +60,7 @@ def stage_split(cfg: dict) -> None:
     # L4: near-duplicate text components (always kept together)
     texts = labeled["text_hash"].drop_duplicates().reset_index(drop=True)
     x_texts = lookup(texts, emb, index)
-    pairs = near_dup_pairs(x_texts, thr, device)
+    pairs = near_dup_pairs(x_texts, thr, device, chunk)
     text_component = pd.Series(components(len(texts), pairs), index=texts.values)
     labels_by_text = labeled.drop_duplicates("text_hash").set_index("text_hash")["label"].loc[texts].to_numpy()
     labeled["text_component"] = labeled["text_hash"].map(text_component).to_numpy()
@@ -117,11 +117,11 @@ def stage_split(cfg: dict) -> None:
         "cross_label_pairs": int((labels_by_text[pairs[:, 0]] != labels_by_text[pairs[:, 1]]).sum()),
         "components": int(text_component.nunique()),
         "largest_component_texts": int(np.bincount(text_component.to_numpy()).max()),
-        "test_max_sim_to_train": similarity_summary(max_similarity(x["test"], x["train"], device), thr),
-        "val_max_sim_to_train": similarity_summary(max_similarity(x["val"], x["train"], device), thr),
+        "test_max_sim_to_train": similarity_summary(max_similarity(x["test"], x["train"], device, chunk), thr),
+        "val_max_sim_to_train": similarity_summary(max_similarity(x["val"], x["train"], device, chunk), thr),
     }
     # Pairs were found with the same fp16 kernel; allow a hair of numerical slack at the threshold.
-    residual = max_similarity(x["test"], x["train"], device)
+    residual = max_similarity(x["test"], x["train"], device, chunk)
     assert (residual >= thr + 2e-3).sum() == 0, "test text near-duplicates a training text"
 
     # L7: enforced in stage 1 (scaler + LR in one Pipeline, grouped CV on train, thresholds on val)
@@ -131,7 +131,7 @@ def stage_split(cfg: dict) -> None:
     labeled_hashes = set(labeled["text_hash"])
     in_labeled = unlabeled["text_hash"].isin(labeled_hashes).to_numpy()
     held_out = np.vstack([x["val"], x["test"]])
-    pool_sim = max_similarity(lookup(unlabeled["text_hash"], emb, index), held_out, device)
+    pool_sim = max_similarity(lookup(unlabeled["text_hash"], emb, index), held_out, device, chunk)
     unlabeled["max_sim_val_test"] = pool_sim
     unlabeled["pool_status"] = np.select([in_labeled, pool_sim >= thr], ["in_labeled", "near_val_test"], "ok")
     unlabeled.to_parquet(out / "unlabeled.parquet", index=False)

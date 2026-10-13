@@ -6,13 +6,15 @@ import re
 import pandas as pd
 
 _WS = re.compile(r"\s+")
+_PARTS = re.compile(r"[;|]")  # multi-value separators: ';' (older exports) and ' | ' (current)
+LABEL = "category"  # 1 = human, -1 = not human, 0 = unknown
 
 
 def clean_field(value, placeholders: set[str]) -> str:
-    """Split on ';', drop placeholder tokens and blanks, re-join."""
+    """Split on ';' or '|', drop placeholder tokens and blanks, re-join with '; '."""
     if value is None or pd.isna(value):
         return ""
-    parts = (p.strip() for p in str(value).split(";"))
+    parts = (p.strip() for p in _PARTS.split(str(value)))
     return "; ".join(p for p in parts if p and p.strip(" \"'.").lower() not in placeholders)
 
 
@@ -38,7 +40,8 @@ def text_hash(norm: str) -> str:
 
 
 def is_placeholder(value, placeholders: set[str]) -> bool:
-    return pd.isna(value) or str(value).strip(" \"'.").lower() in placeholders
+    """True if the value is missing or every part of it is a placeholder."""
+    return clean_field(value, placeholders) == ""
 
 
 def load_bioprojects(path) -> dict[str, str]:
@@ -55,16 +58,20 @@ def prepare(cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict]:
     """
     text_cfg = cfg["text"]
     placeholders = {p.lower() for p in text_cfg["placeholder_tokens"]}
-    raw = pd.read_csv(cfg["paths"]["labeled_csv"], low_memory=False)
-    stats = {"raw_rows": len(raw), "raw_label_counts": {str(k): int(v) for k, v in raw["is_human"].value_counts().items()}}
+    labeled_path = cfg["paths"]["labeled_data"]
+    if str(labeled_path).endswith(".parquet"):
+        raw = pd.read_parquet(labeled_path)
+    else:
+        raw = pd.read_csv(labeled_path, low_memory=False)
+    stats = {"raw_rows": len(raw), "raw_label_counts": {str(k): int(v) for k, v in raw[LABEL].value_counts().items()}}
 
     raw["text"] = build_text(raw, text_cfg)
     raw["text_norm"] = raw["text"].map(normalize)
     raw["text_hash"] = raw["text_norm"].map(text_hash)
 
     # ---- labeled ----
-    lab = raw[raw["is_human"] != 0].copy()
-    ph_neg = (lab["is_human"] == -1) & lab["host_name"].map(lambda v: is_placeholder(v, placeholders))
+    lab = raw[raw[LABEL] != 0].copy()
+    ph_neg = (lab[LABEL] == -1) & lab["host_name"].map(lambda v: is_placeholder(v, placeholders))
     stats["dropped_placeholder_negatives"] = int(ph_neg.sum())
     lab = lab[~ph_neg]
 
@@ -72,7 +79,7 @@ def prepare(cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict]:
     stats["dropped_labeled_empty_text"] = int(empty.sum())
     lab = lab[~empty]
 
-    n_labels = lab.groupby("text_hash")["is_human"].nunique()
+    n_labels = lab.groupby("text_hash")[LABEL].nunique()
     conflicting = lab["text_hash"].isin(n_labels.index[n_labels > 1])
     stats["dropped_conflicting_texts"] = int((n_labels > 1).sum())
     stats["dropped_conflicting_rows"] = int(conflicting.sum())
@@ -84,7 +91,7 @@ def prepare(cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict]:
         "text": lab["text"].values,
         "text_norm": lab["text_norm"].values,
         "text_hash": lab["text_hash"].values,
-        "label": (lab["is_human"] == 1).astype("int8").values,
+        "label": (lab[LABEL] == 1).astype("int8").values,
         "taxon_id": lab["sample_taxon_id"].values,
         "taxonomy_name": lab["sample_taxonomy_name"].values,
         "bioproject": lab["biosample_accession"].map(projects).values,
@@ -95,8 +102,8 @@ def prepare(cfg: dict) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, dict]:
     stats["labeled_bioproject_coverage"] = float(labeled["bioproject"].notna().mean())
 
     # ---- unlabeled ----
-    unl = raw[(raw["is_human"] == 0) & (raw["text_norm"] != "")]
-    stats["unlabeled_rows"] = int((raw["is_human"] == 0).sum())
+    unl = raw[(raw[LABEL] == 0) & (raw["text_norm"] != "")]
+    stats["unlabeled_rows"] = int((raw[LABEL] == 0).sum())
     stats["dropped_unlabeled_empty_text"] = stats["unlabeled_rows"] - len(unl)
     unlabeled_rows = pd.DataFrame({"accession": unl["biosample_accession"].values, "text_hash": unl["text_hash"].values})
     unlabeled_texts = (
