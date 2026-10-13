@@ -10,6 +10,7 @@ __pycache__/
 data/*
 !data/human_labeled.parquet
 data exploration/*.parquet
+!data exploration/validation_review.parquet
 
 # Generated pipeline outputs
 artifacts*/
